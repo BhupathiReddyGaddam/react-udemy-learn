@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 
 const root = document.getElementById('root');
 
-ReactDOM.render(<App />, 
+ReactDOM.render(<App appTitle="Person Manger"/>, 
 root);
 
 // If you want your app to work offline and load faster, you can change

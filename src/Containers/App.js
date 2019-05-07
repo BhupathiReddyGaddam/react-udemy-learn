@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import Person from '../Components/Persons/Person/Person';
+import Persons from '../Components/Persons/Persons';
 import classes from './App.css';
+import Cockpit from '../Cockpit/Cockpit';
+import withClass from '../hoc/WithClass';
+import Aux from '../hoc/Auxiliary';
 
 class App extends React.Component {
   state = {
@@ -9,7 +12,8 @@ class App extends React.Component {
         {id: "kjojei1", name: "Beeta", age: 7},
         {id: "kkjoi23", name: "Gama", age: 9}
     ],
-    showPerson: false
+    showPerson: false,
+    showCockpit: true
   
   }
 
@@ -55,47 +59,32 @@ class App extends React.Component {
 
   render() {
     let persons = null;
-    let btnClass = classes.switchButton;
 
     if(this.state.showPerson) {
       persons=(
           <div>
-            {this.state.persons.map((person, index) => {
-              return <Person 
-              name={person.name}
-              age={person.age}
-              click={this.deletePersonHandler.bind(this, index)}
-              key={person.id}
-              change={(event) => this.changedNameHandler(event, person.id)}/>
-            })}
+            <Persons persons={this.state.persons}
+            deletetoggle={this.deletePersonHandler}
+            changedname={this.changedNameHandler}/>
           </div>
       );
-
-        btnClass = classes.switchButtonRed;
-    }
-
-    const classStyles = [];
-
-    if(this.state.persons.length <=2) {
-      classStyles.push(classes.someColor);
-    }
-
-    if(this.state.persons.length <=1) {
-      classStyles.push(classes.fontStyle);
     }
 
     return(
-      <div className={classes.App}>
-        <h1>React learn</h1>
-        <p className={classStyles.join(' ')}>This is really working!</p>
-        <button className={btnClass} onClick={this.personToggleHandler}>Switch Button</button>
+      <Aux>
+        <button onClick={() => {this.setState({showCockpit: false  })}}>Remove Button</button>
+        {this.state.showCockpit ?<Cockpit 
+        title={this.props.appTitle}
+        personslength={this.state.persons.length}
+        btncolor={this.state.showPerson}
+        persontoggle={this.personToggleHandler}/> : null }
         {persons}
-      </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
 
 // const App = (props) => {
 //   const [personState, setPersonState] = useState({

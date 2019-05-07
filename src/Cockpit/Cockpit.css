@@ -1,0 +1,35 @@
+.someColor {
+    color: green;
+  }
+  
+  .fontStyle {
+    font-weight: bold;
+  }
+  
+  .switchButton {
+    padding: 8px;
+    background-color: green;
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    cursor: pointer;
+  }
+  
+  .switchButton:hover {
+    background-color: lightgreen;
+    color: black;
+  }
+  
+  .switchButtonRed {
+    background-color: red;
+    padding: 8px;
+    color: white;
+    font: inherit;
+    border: 1px solid blue;
+    cursor: pointer;
+  }
+  
+  .switchButtonRed:hover {
+    background-color: salmon;
+    color: white;
+  }
