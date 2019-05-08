@@ -1,5 +1,6 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useContext} from 'react';
 import classes from './Cockpit.css';
+import AuthContext from '../../AuthContext/AuthContext';
 
 const Cockpit = (props) => {
     useEffect(() => {
@@ -11,6 +12,8 @@ const Cockpit = (props) => {
             console.log('clean up use effect');
         };
     }, []);
+
+    const authContext = useContext(AuthContext);
 
     const classStyles = [];
     let btnClass = classes.switchButton;
@@ -30,6 +33,7 @@ const Cockpit = (props) => {
             <h1>{props.title}</h1>
             <p className={classStyles.join(' ')}>This is really working!</p>
             <button className={btnClass} onClick={props.persontoggle}>Switch Button</button>
+            <button onClick={authContext.login}>Login</button>
         </div>
     );
 }

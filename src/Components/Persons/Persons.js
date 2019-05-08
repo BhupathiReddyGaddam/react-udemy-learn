@@ -17,7 +17,8 @@ class Persons extends PureComponent {
             age={person.age}
             click={() => this.props.deletetoggle(index)}
             key={person.id}
-            change={(event) => this.props.changedname(event, person.id)}/>
+            change={(event) => this.props.changedname(event, person.id)}
+            isAuth={this.props.isAuthanticated}/>
         });
     }
 } 

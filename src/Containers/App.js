@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import Persons from '../Components/Persons/Persons';
 import classes from './App.css';
-import Cockpit from '../Cockpit/Cockpit';
+import Cockpit from '../Components/Cockpit/Cockpit';
 import withClass from '../hoc/WithClass';
 import Aux from '../hoc/Auxiliary';
+import AuthContext from '../AuthContext/AuthContext';
 
 class App extends React.Component {
   state = {
@@ -13,7 +14,9 @@ class App extends React.Component {
         {id: "kkjoi23", name: "Gama", age: 9}
     ],
     showPerson: false,
-    showCockpit: true
+    showCockpit: true,
+    changeCounter: 0,
+    authanticated: true
   
   }
 
@@ -42,7 +45,12 @@ class App extends React.Component {
 
     const persons = [...this.state.persons]
     persons[personIndex] = person;
-    this.setState({persons: persons})
+    this.setState((prevState, props) => {
+      return {
+        persons: persons,
+        changeCounter: prevState.changeCounter + 1
+      };
+    });
   }
 
   personToggleHandler = () => {
@@ -57,6 +65,12 @@ class App extends React.Component {
     this.setState({persons: persons});
   }
 
+  loginHandler = () => {
+    this.setState({
+      authanticated: false
+    });
+  }
+
   render() {
     let persons = null;
 
@@ -65,7 +79,8 @@ class App extends React.Component {
           <div>
             <Persons persons={this.state.persons}
             deletetoggle={this.deletePersonHandler}
-            changedname={this.changedNameHandler}/>
+            changedname={this.changedNameHandler}
+            isAuthanticated={this.state.authanticated}/>
           </div>
       );
     }
@@ -73,12 +88,17 @@ class App extends React.Component {
     return(
       <Aux>
         <button onClick={() => {this.setState({showCockpit: false  })}}>Remove Button</button>
+        <AuthContext.Provider 
+        value={{
+          authanticated: this.state.authanticated, 
+          login: this.loginHandler}}>
         {this.state.showCockpit ?<Cockpit 
         title={this.props.appTitle}
         personslength={this.state.persons.length}
         btncolor={this.state.showPerson}
         persontoggle={this.personToggleHandler}/> : null }
         {persons}
+        </AuthContext.Provider>
       </Aux>
     );
   }
